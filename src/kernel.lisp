@@ -353,6 +353,8 @@
      leave))
   (inform :info kernel "Control thread exiting normally."))
 
+(defvar *running-kernel* nil
+  "kernel instance")
 
 (defun run-kernel (kernel-class connection-file)
   "Run a kernel based on a kernel class and a connection file."
@@ -361,6 +363,7 @@
   (let ((kernel (make-instance kernel-class
                                :connection-file connection-file
                                :control-thread (bordeaux-threads:current-thread))))
+    (setq *running-kernel* kernel)
     (start kernel)
     (unwind-protect
         (run-control kernel)

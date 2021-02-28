@@ -40,6 +40,10 @@
           (first (uiop:raw-command-line-arguments))
           (format nil "~(~A~)" (uiop:implementation-type)))
       +eval-flag+ (if (find-package :quicklisp)
+		      "(ql:quickload :swank)"
+		      "(asdf:load-system :swank)")
+      +eval-flag+ "(swank:create-server :port 0)"
+      +eval-flag+ (if (find-package :quicklisp)
                     "(ql:quickload :common-lisp-jupyter)"
                     "(asdf:load-system :common-lisp-jupyter)")
       +eval-flag+ "(jupyter:run-kernel 'common-lisp-jupyter:kernel #\"{connection_file}\")")))
